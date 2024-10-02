@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MoviesScreen from "../screens/MoviesScreen";
 import DetailsPage from "../screens/DetailsPage";
 import TVShowsScreen from "../screens/TVShowsScreen";
+import SearchScreen from "../screens/SearchScreen";
 
 export default function MovieStack() {
   const Stack = createNativeStackNavigator();
@@ -19,6 +20,11 @@ export default function MovieStack() {
           component={DetailsPage}
           name="DetailsPage"
           options={{ title: "Details Page" }}
+        />
+        <Stack.Screen
+          component={SearchScreen}
+          name="SearchScreen"
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           component={TVShowsScreen}

@@ -16,7 +16,7 @@ export default function NavigationTab({navigation}) {
         </TouchableOpacity>
       </View>
       <View>
-        <TouchableOpacity style={styles.button} onPress={() => handleActiveScreen("SearchResults")}>
+        <TouchableOpacity style={styles.button} onPress={() => handleActiveScreen("SearchScreen")}>
           <Text style={styles.buttonText}>Search Results</Text>
         </TouchableOpacity>
       </View>
