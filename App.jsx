@@ -1,17 +1,31 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Colors from "./components/constants/colors";
-import Header from "./components/ui-elements/Header";
-import NavigationTab from "./components/ui-elements/NavigationTab";
 import TVShowsScreen from "./screens/TVShowsScreen";
+import MoviesScreen from "./screens/MoviesScreen";
+import { useState } from "react";
+import MovieStack from "./stacks/AppStack";
 
 export default function App() {
+  const [activeScreen, setActiveScreen] = useState("Movies");
+
+  function handleScreenChange(screen) {
+    setActiveScreen(screen);
+  }
+
+  let currScreen = <MoviesScreen />;
+
+  if (activeScreen == "Movies") {
+    currScreen = <MoviesScreen />;
+  } else if (activeScreen == "Search Results") {
+    // currScreen = <SearchResults />
+  } else if (activeScreen == "TV Shows") {
+    currScreen = <TVShowsScreen />;
+  }
+
   return (
     <View style={styles.rootContainer}>
-      <Header />
-      <NavigationTab />
-      <TVShowsScreen />
-      <StatusBar style="auto" />
+      <MovieStack />
     </View>
   );
 }

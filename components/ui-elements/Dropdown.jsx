@@ -3,15 +3,32 @@ import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import Colors from "../constants/colors";
 
-export default function DropdownExample() {
+export default function DropdownExample({ handleDropdown, page }) {
+  let options = [];
+
+  if (page === "tv") {
+    options = [
+      { label: "Airing Today", value: "airing_today" },
+      { label: "On The Air", value: "on_the_air" },
+      { label: "Popular", value: "popular" },
+      { label: "Top Rated", value: "top_rated" },
+    ];
+  } else {
+    options = [
+      { label: "Mow Playing", value: "now_playing" },
+      { label: "Popular", value: "popular" },
+      { label: "Top Rated", value: "top_rated" },
+      { label: "Upcoming", value: "upcoming" },
+    ];
+  }
+
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "JavaScript", value: "javascript" },
-    { label: "Python", value: "python" },
-    { label: "Java", value: "java" },
-    { label: "C++", value: "cpp" },
-  ]);
+  const [value, setValue] = useState("popular");
+  const [items, setItems] = useState(options);
+
+  function dropdownChange() {
+    handleDropdown(value);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,6 +43,7 @@ export default function DropdownExample() {
           setItems={setItems}
           placeholder="Select an option"
           style={styles.dropdown}
+          onChangeValue={dropdownChange}
         />
       </View>
     </SafeAreaView>
@@ -38,6 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
+    zIndex: 100,
   },
   label: {
     fontSize: 16,
@@ -45,10 +64,12 @@ const styles = StyleSheet.create({
   },
   dropdownContainer: {
     width: "80%",
+    zIndex: 100,
   },
   dropdown: {
-    backgroundColor: Colors.accentColor,
+    backgroundColor: '#fff',
     borderColor: "#ccc",
     borderWidth: 1,
+    zIndex: 100,
   },
 });

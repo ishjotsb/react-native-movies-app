@@ -4,7 +4,7 @@ import Colors from "../constants/colors";
 export default function Header() {
   return (
     <SafeAreaView style={styles.rootContainer}>
-      <Text style={styles.headerText}>The Movies App</Text>
+      <Text style={styles.headerText}>Movies App</Text>
     </SafeAreaView>
   );
 }

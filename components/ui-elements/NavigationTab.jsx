@@ -1,16 +1,29 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, StatusBar } from "react-native";
+import { Colors } from "../constants/colors";
 
-export default function NavigationTab() {
+export default function NavigationTab({navigation}) {
+
+    function handleActiveScreen(screen) {
+        navigation.navigate(screen)
+    }
+
   return (
     <View style={styles.rootContainer}>
+    <StatusBar style="auto" backgroundColor="green" />
       <View>
-        <Text>Movies</Text>
+        <TouchableOpacity style={styles.button} onPress={() => handleActiveScreen("Movies")}>
+          <Text style={styles.buttonText}>Movies</Text>
+        </TouchableOpacity>
       </View>
       <View>
-        <Text>Search Results</Text>
+        <TouchableOpacity style={styles.button} onPress={() => handleActiveScreen("SearchResults")}>
+          <Text style={styles.buttonText}>Search Results</Text>
+        </TouchableOpacity>
       </View>
       <View>
-        <Text>TV Shows</Text>
+        <TouchableOpacity style={styles.button} onPress={() => handleActiveScreen("TVShowsScreen")}>
+          <Text style={styles.buttonText}>TV Shows</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -20,9 +33,12 @@ const styles = StyleSheet.create({
   rootContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    padding: 20,
+    padding: 12,
     alignItems: "center",
     borderBottomColor: "#777777ff",
     borderBottomWidth: 2,
+  },
+  button: {
+    padding: 8,
   },
 });
