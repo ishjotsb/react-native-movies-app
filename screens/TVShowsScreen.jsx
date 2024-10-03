@@ -4,12 +4,13 @@ import InformationCard from "../components/ui-elements/InformationCard";
 import Dropdown from "../components/ui-elements/Dropdown";
 import NavigationTab from "../components/ui-elements/NavigationTab";
 import Header from "../components/ui-elements/Header";
+import { API_ACCESS_TOKEN } from "@env";
 
 const options = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization: `Bearer `,
+    Authorization: `Bearer ${API_ACCESS_TOKEN}`,
   },
 };
 
@@ -42,9 +43,9 @@ export default function TVShowsScreen({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.rootContainer}>
+    <View style={styles.rootContainer}>
       <Header />
-      <NavigationTab navigation={navigation} />
+      <NavigationTab navigation={navigation} activeScreen="tv" />
       <View style={styles.dropdownContainer}>
         <Dropdown handleDropdown={handleDropdownChange} page="tv" />
       </View>
@@ -65,14 +66,13 @@ export default function TVShowsScreen({ navigation }) {
           />
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    padding: 16,
   },
   listContainer: {
     flex: 1,

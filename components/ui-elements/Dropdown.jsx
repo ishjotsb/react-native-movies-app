@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import Colors from "../constants/colors";
 
 export default function DropdownExample({ handleDropdown, page }) {
   let options = [];
@@ -15,7 +14,7 @@ export default function DropdownExample({ handleDropdown, page }) {
     ];
   } else {
     options = [
-      { label: "Mow Playing", value: "now_playing" },
+      { label: "Now Playing", value: "now_playing" },
       { label: "Popular", value: "popular" },
       { label: "Top Rated", value: "top_rated" },
       { label: "Upcoming", value: "upcoming" },

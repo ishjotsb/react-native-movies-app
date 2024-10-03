@@ -5,12 +5,13 @@ import Dropdown from "../components/ui-elements/Dropdown";
 import DetailsPage from "./DetailsPage";
 import Header from "../components/ui-elements/Header";
 import NavigationTab from "../components/ui-elements/NavigationTab";
+import { API_ACCESS_TOKEN } from "@env";
 
 const options = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization: `Bearer `,
+    Authorization: `Bearer ${API_ACCESS_TOKEN}`,
   },
 };
 
@@ -43,9 +44,9 @@ export default function MoviesScreen({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.rootContainer}>
+    <View style={styles.rootContainer}>
       <Header />
-      <NavigationTab navigation={navigation} />
+      <NavigationTab navigation={navigation} activeScreen="movies" />
       <View style={styles.dropdownContainer}>
         <Dropdown handleDropdown={handleDropdownChange} page="movies" />
       </View>
@@ -66,14 +67,14 @@ export default function MoviesScreen({ navigation }) {
           />
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    padding: 16,
+    // paddingVertical: 16,
   },
   listContainer: {
     flex: 1,

@@ -1,23 +1,24 @@
-import { SafeAreaView, Text, StyleSheet } from "react-native";
+import { StatusBar, Text, StyleSheet, View } from "react-native";
 import Colors from "../constants/colors";
 
 export default function Header() {
   return (
-    <SafeAreaView style={styles.rootContainer}>
+    <View style={styles.rootContainer}>
       <Text style={styles.headerText}>Movies App</Text>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: Colors.tertiaryColor,
+    backgroundColor: Colors.primaryColor,
   },
   headerText: {
     padding: 16,
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 20,
-    color: Colors.textColor2
+    color: Colors.textColor2,
+    marginTop: 50
   },
 });

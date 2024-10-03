@@ -24,7 +24,10 @@ export default function MovieStack() {
         <Stack.Screen
           component={SearchScreen}
           name="SearchScreen"
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            animation: "none",
+          }}
         />
         <Stack.Screen
           component={TVShowsScreen}
