@@ -32,7 +32,7 @@ export default function DropdownExample({ handleDropdown, page }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.dropdownContainer}>
-        <Text style={styles.label}>Select a programming language:</Text>
+        <Text style={styles.label}>Select a category:</Text>
         <DropDownPicker
           open={open}
           value={value}

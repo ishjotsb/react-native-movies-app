@@ -1,4 +1,10 @@
-import { SafeAreaView, View, StyleSheet, FlatList, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { useEffect, useState } from "react";
 import InformationCard from "../components/ui-elements/InformationCard";
 import Dropdown from "../components/ui-elements/Dropdown";
@@ -11,7 +17,7 @@ const options = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization: `Bearer ${API_ACCESS_TOKEN}`,
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMDAxMTFhMTM0ODhmZTczYmI1OTI0NWFlNWE2NTg0NyIsIm5iZiI6MTcyNzczMzMyNC44Nzc1NzksInN1YiI6IjY2ZmIxZGMxYzU5YTJkYjMyZGQwMzE4ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._P4FAodnx2kM_bZ14g40ji83HB4q90-p4Tq4rgX9Fec`,
   },
 };
 
@@ -19,29 +25,75 @@ export default function MoviesScreen({ navigation }) {
   const [tvShowList, setTvShowList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState("popular");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    const fetchTVShows = async () => {
+    const fetchTVShows = async (pageNum = 1) => {
+      setLoading(true);
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`,
+        `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${pageNum}`,
         options
       );
       const data = await response.json();
       setTvShowList(data.results);
+      setTotalPages(data.total_pages);
       setLoading(false);
     };
 
-    fetchTVShows();
-  }, [category]);
+    fetchTVShows(page);
+  }, [category, page]);
 
   function handleDropdownChange(value) {
     setCategory(value);
+    setPage(1);
   }
 
   function handleDetailsPage(id) {
-    console.log(id);
     navigation.navigate("DetailsPage", { id: id, type: "movie" });
   }
+
+  const renderPagination = () => {
+    const pageNumbers = [];
+    const startPage = Math.max(1, page - 2);
+    const endPage = Math.min(totalPages, startPage + 4);
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <TouchableOpacity
+          key={i}
+          onPress={() => setPage(i)}
+          style={styles.pageButton}
+        >
+          <Text style={i === page ? styles.activePage : styles.pageNumber}>
+            {i}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+
+    return (
+      <View style={styles.paginationContainer}>
+        {page > 1 && (
+          <TouchableOpacity
+            onPress={() => setPage(page - 1)}
+            style={styles.pageButton}
+          >
+            <Text style={styles.pageNumber}>Previous</Text>
+          </TouchableOpacity>
+        )}
+        {pageNumbers}
+        {page < totalPages && (
+          <TouchableOpacity
+            onPress={() => setPage(page + 1)}
+            style={styles.pageButton}
+          >
+            <Text style={styles.pageNumber}>Next</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  };
 
   return (
     <View style={styles.rootContainer}>
@@ -67,6 +119,7 @@ export default function MoviesScreen({ navigation }) {
           />
         )}
       </View>
+      {!loading && renderPagination()}
     </View>
   );
 }
@@ -74,7 +127,6 @@ export default function MoviesScreen({ navigation }) {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    // paddingVertical: 16,
   },
   listContainer: {
     flex: 1,
@@ -87,5 +139,27 @@ const styles = StyleSheet.create({
   dropdownContainer: {
     zIndex: 10,
     marginBottom: 50,
+  },
+  paginationContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+  },
+  pageButton: {
+    marginHorizontal: 5,
+    padding: 10,
+  },
+  pageNumber: {
+    fontSize: 16,
+    color: "#000",
+  },
+  activePage: {
+    fontSize: 16,
+    color: "#fff",
+    backgroundColor: "#000",
+    padding: 5,
+    borderRadius: 3,
   },
 });
